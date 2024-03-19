@@ -1,16 +1,14 @@
 from django.db import models
-from users.models import User
 
 
-# Create your models here.
 class Room(models.Model):
-    name = models.CharField(max_length=100)
-    owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name='owned_rooms')
-    users = models.ManyToManyField(User, related_name='rooms')
+    name = models.CharField(max_length=50)
+    owner = models.ForeignKey('users.User', related_name="owned_rooms", on_delete=models.CASCADE)
+    members = models.ManyToManyField('users.User', related_name="member_rooms")
 
 
 class Message(models.Model):
-    room = models.ForeignKey(Room, on_delete=models.CASCADE, related_name='room')
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user')
-    content = models.TextField(blank=False, null=False)
+    text = models.TextField(max_length=300)
     timestamp = models.DateTimeField(auto_now_add=True)
+    sender = models.ForeignKey('users.User', related_name="sent_messages", on_delete=models.CASCADE)
+    room = models.ForeignKey(Room, related_name="messages", on_delete=models.CASCADE)
