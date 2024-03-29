@@ -1,6 +1,6 @@
-from django.shortcuts import render
+
 from chat.models import Message, Room
-from rest_framework import serializers, viewsets
+from rest_framework import viewsets
 from chat.serializers import RoomSerializer, MessageSerializer
 from rest_framework.permissions import IsAuthenticated
 import datetime

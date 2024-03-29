@@ -1,37 +1,71 @@
 import json
 from channels.generic.websocket import AsyncWebsocketConsumer
+from users.models import User
+from chat.models import Room, Message
+from channels.db import database_sync_to_async
+from djangochannelsrestframework.observer.generics import action
+from djangochannelsrestframework.generics import GenericAsyncAPIConsumer
+from chat.serializers import RoomSerializer
+from users.serializers import UserSerializer
+from djangochannelsrestframework.mixins import (
+    ListModelMixin,
+    RetrieveModelMixin,
+    PatchModelMixin,
+    UpdateModelMixin,
+    CreateModelMixin,
+    DeleteModelMixin,
+)
 
 
-class ChatConsumer(AsyncWebsocketConsumer):
-    async def connect(self):
-        self.room_name = self.scope['url_route']['kwargs']['room_name']
-        await self.channel_layer.group_add(
-            self.room_name,
-            self.channel_name
+class RoomConsumer(GenericAsyncAPIConsumer):
+    queryset = Room.objects.all()
+    serializer_class = RoomSerializer
+    lookup_field = 'pk'
+
+    @action()
+    async def join_room(self, pk):
+        self.room_subscribe = pk
+        await self.add_user_to_room(pk)
+
+    @action()
+    async def leave_room(self, pk):
+        await self.remove_user_from_room(pk)
+
+    @database_sync_to_async
+    def add_user_to_room(self, pk):
+        user: User = self.scope["user"]
+        if not User.current_room.filter(pk=self.room_subscribe).exists():
+            user.current_room.add(Room.objects.get(pk=pk))
+
+    @database_sync_to_async
+    def remove_user_from_room(self, pk):
+        user: User = self.scope["user"]
+        user.current_room.remove()
+
+    @action()
+    async def send_message(self, text):
+        user: User = self.scope["user"]
+        room: Room = await self.get_room(pk=self.room_subscribe)
+        await database_sync_to_async(Message.objects.create)(
+            text=text,
+            sender=user,
+            room=room,
         )
-        await self.accept()
 
-    async def disconnect(self, close_code):
-        await self.channel_layer.group_discard(
-            self.room_name,
-            self.channel_name
-        )
+    @database_sync_to_async
+    def get_room(self, pk):
+        return Room.objects.get(pk=pk)
 
-    async def receive(self, text_data):
-        text_data_json = json.loads(text_data)
-        message = text_data_json['message']
 
-        await self.channel_layer.group_send(
-            self.room_name,
-            {
-                'type': 'chat_message',
-                'message': message
-            }
-        )
+class UserConsumer(
+        ListModelMixin,
+        RetrieveModelMixin,
+        PatchModelMixin,
+        UpdateModelMixin,
+        CreateModelMixin,
+        DeleteModelMixin,
+        GenericAsyncAPIConsumer,
+):
 
-    async def chat_message(self, event):
-        message = event['message']
-
-        await self.send(text_data=json.dumps({
-            'message': message
-        }))
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
