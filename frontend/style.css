@@ -1,0 +1,17 @@
+div.auth {
+    margin-left: 300px;
+
+}
+
+h1 {}
+
+body {
+    background: linear-gradient(rgb(78, 78, 202), 75%, rgba(216, 23, 184, 0.336));
+}
+
+a {
+    text-decoration: none;
+
+}
+
+cat extensions.txt | xargs -L 1 code --install-extension
