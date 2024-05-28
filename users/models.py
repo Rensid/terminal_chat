@@ -3,9 +3,10 @@ from django.contrib.auth.models import AbstractUser
 
 
 class User(AbstractUser):
-    current_room = models.ForeignKey('chat.Room', related_name='current_users', blank=True,
+    current_room = models.ForeignKey('chat.Room', related_name='current_room', blank=True,
                                      null=True, on_delete=models.SET_NULL)
     rooms = models.ManyToManyField('chat.Room', related_name='users', blank=True)
+
 
 # class Snippet(models.Model):
 #     created = models.DateTimeField(auto_now_add=True)

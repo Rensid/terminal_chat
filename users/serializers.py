@@ -2,15 +2,17 @@ from rest_framework import serializers
 from rest_framework import permissions
 from users.models import User
 from chat.models import Message, Room
+from chat.serializers import RoomSerializer
 
 
 class UserSerializer(serializers.ModelSerializer):
-    rooms = serializers.PrimaryKeyRelatedField(many=True, queryset=Room.objects.all(), allow_null=True, required=False)
+    # rooms = serializers.PrimaryKeyRelatedField(many=True, queryset=Room.objects.all(), allow_null=True, required=False)
+    rooms = RoomSerializer(many=True, read_only=True)
     current_room = serializers.PrimaryKeyRelatedField(queryset=Room.objects.all(), allow_null=True, required=False)
 
     class Meta:
         model = User
-        fields = ['id', 'username', 'rooms', 'current_room']
+        fields = ['id', 'first_name', 'last_name', 'email', 'username', 'rooms', 'current_room']
 
 # class SnippetSerializer(serializers.HyperlinkedModelSerializer):
 

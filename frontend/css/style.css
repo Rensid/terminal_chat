@@ -1,0 +1,219 @@
+/* Общие стили */
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background: linear-gradient(to right, blue, 20%, purple);
+}
+
+
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    /* Высота экрана */
+}
+
+
+/* Шапка */
+header {
+    background: black;
+    color: grey;
+    text-align: left;
+    padding: 10px;
+}
+
+header h1 {
+    margin-left: 20px;
+    margin-bottom: 0;
+    text-align: center;
+    color: transparent;
+    -webkit-background-clip: text;
+    background-clip: text;
+    font-size: 88px;
+    font-weight: bold;
+    font-family: Philosopher;
+    background-image: linear-gradient(blue, purple);
+
+}
+
+.menu-btn {
+    float: right;
+
+    outline: none;
+    border: 0;
+    background: transparent;
+}
+
+.menu-btn svg path {
+    fill: #ffffff;
+}
+
+.menu-btn:hover svg path {
+    fill: #743ee1;
+}
+
+/* header ul {
+    text-align: left;
+    position: relative;
+    bottom: 30px;
+}
+
+header ul li {
+    display: inline;
+    margin-right: 1px;
+    position: relative;
+    bottom: 20px;
+}
+
+header li a {
+    display: inline-block;
+    width: 75px;
+    height: 10px;
+    line-height: 10px;
+    text-align: center;
+    padding: 20px;
+    border: 3px solid;
+    border-color: rgb(58, 58, 119);
+    background-color: #743EE1;
+    text-decoration: none;
+    color: #ffffff;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-weight: bold;
+
+} */
+
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: -300px;
+    /* Начальное положение за пределами видимой области */
+    height: 100%;
+    width: 300px;
+    /* Ширина боковой панели */
+    background: linear-gradient(black, 60%, blue);
+    /* Цвет фона боковой панели */
+    transition: left 0.3s;
+    /* Анимация перехода */
+}
+
+.sidebar ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.sidebar ul li {
+    padding: 10px;
+}
+
+.sidebar ul li a {
+    font-size: 30px;
+    display: inline-block;
+    width: 200px;
+    height: 75px;
+    color: white;
+    border: 3px solid;
+    border-color: #ffffff;
+    text-decoration: none;
+    background: transparent;
+    line-height: 250%;
+    text-align: center;
+    margin-top: 30px;
+    margin-left: 40px;
+    margin-bottom: -50px;
+}
+
+.sidebar ul li a:hover {
+    border-color: #7f0081;
+    /* Изменение цвета при наведении */
+}
+
+/* Аутентификация */
+.auth {
+    text-align: center;
+    font-size: 40px;
+    margin-top: 50px;
+}
+
+.authfields {
+    margin-top: 25px;
+    height: 60px;
+    width: 350px;
+    text-align: center;
+    font-size: 25px;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-weight: bold;
+    background: skyblue;
+    border: 3px solid;
+    border-image: linear-gradient(to right top, purple, skyblue, blue);
+    border-image-slice: 1;
+
+}
+
+.login {
+    display: inline-block;
+    font-size: 25px;
+    margin-top: 25px;
+    position: relative;
+    text-align: center;
+    width: 253px;
+    height: 45px;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    border: 2px solid;
+    border-color: #ffffff;
+    background-color: transparent;
+    /* border-image-slice: 1; */
+}
+
+.registration {
+    display: inline-block;
+    margin-top: 25px;
+    color: black;
+    line-height: 40px;
+    width: 250px;
+    height: 45px;
+    text-decoration: none;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    background-color: transparent;
+    font-size: 25px;
+    border: 2px solid;
+    border-color: #ffffff;
+}
+
+.login:hover {
+    border-color: #7f0081;
+}
+
+.registration:hover {
+    border-color: #7f0081;
+}
+
+/* Футер */
+footer {
+    background-color: black;
+    color: white;
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+    font-size: 7px;
+    text-align: center;
+}
+
+footer ul {
+    padding: 0;
+    list-style-type: none;
+    /* Убираем маркеры списка */
+}
+
+footer ul li {
+    display: inline-block;
+    margin-right: 5px;
+}
+
+footer h3 {
+    position: relative;
+    vertical-align: top;
+}

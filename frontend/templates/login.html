@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Авторизация - RensidChat</title>
+    <link rel="stylesheet" href="../css/login.css">
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <h1>RensidChat</h1>
+        </header>
+        <main>
+            <section class="login-section">
+                <h2>Авторизация</h2>
+                <form id="login-form">
+                    <label for="username">Имя пользователя:</label>
+                    <input type="text" id="username" name="username" required>
+                    <label for="password">Пароль:</label>
+                    <input type="password" id="password" name="password" required>
+                    <button type="submit" class="login">Login</button>
+                    <button type="button" onclick="window.location.href='registration.html'">Регистрация</button>
+                </form>
+            </section>
+        </main>
+        <footer>
+            <p>Автор: Ваша команда</p>
+            <p><a href="mailto:support@rendidchat.com">Контакты</a></p>
+        </footer>
+    </div>
+    <script src="../scripts/auth/login.js"></script>
+</body>
+
+</html>
