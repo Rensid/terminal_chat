@@ -12,19 +12,10 @@ from users.serializers import UserSerializer
 from rest_framework.permissions import IsAuthenticated
 
 
-class UserViewSet(viewsets.ReadOnlyModelViewSet):
+class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
 
-
-# TODO и он начался
-# ! не еби мозги
-# * пожалуйста
-# ? итак. эндпоинт djoser способен создать пользователя. значит,
-
-
-
-# views.py
 
 # class UserLoginView(APIView):
 #     def post(self, request):

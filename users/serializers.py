@@ -12,7 +12,7 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ['id', 'first_name', 'last_name', 'email', 'username', 'rooms', 'current_room']
+        fields = ['id', 'first_name', 'last_name', 'email', 'username', 'password', 'rooms', 'current_room']
 
 # class SnippetSerializer(serializers.HyperlinkedModelSerializer):
 
