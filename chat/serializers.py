@@ -1,8 +1,5 @@
 from rest_framework import serializers
-from rest_framework import permissions
-from users.models import User
 from chat.models import Message, Room
-from django.conf import settings
 
 
 class RoomSerializer(serializers.ModelSerializer):

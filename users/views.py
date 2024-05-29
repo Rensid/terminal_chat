@@ -1,34 +1,16 @@
 from .serializers import UserSerializer
-from django.contrib.auth import authenticate, login, logout
-from rest_framework import status
-from rest_framework.reverse import reverse
-from django.http import Http404
-from rest_framework import status, renderers, permissions, generics, viewsets
-from rest_framework.decorators import api_view, action
+from django.contrib.auth import logout
+from rest_framework import status, viewsets
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from users.models import User
-from users.serializers import UserSerializer
 from rest_framework.permissions import IsAuthenticated
 
 
 class UserViewSet(viewsets.ModelViewSet):
+    # отвечает за любые операции с пользователем. обрабатывает запросы GET, POST, PUT, DELETE
     queryset = User.objects.all()
     serializer_class = UserSerializer
-
-
-# class UserLoginView(APIView):
-#     def post(self, request):
-#         username = request.data.get('username')
-#         password = request.data.get('password')
-#         user = authenticate(request, username=username, password=password)
-#         if user:
-#             login(request, user)
-#             serializer = UserSerializer(user)
-
-#             return Response(serializer.data)
-#         else:
-#             return Response({'error': 'Invalid credentials'}, status=status.HTTP_400_BAD_REQUEST)
 
 
 class UserLogoutView(APIView):
@@ -38,27 +20,23 @@ class UserLogoutView(APIView):
 
 
 class ProfileViewSet(APIView):
+    # класс доступа для авторизованных пользователей. в запросе передается jwt токен
     permission_classes = [IsAuthenticated]
 
+    # просто позвращает данные авторизованного пользователя
     def get(self, request):
         return Response({'data': UserSerializer(request.user).data})
 
-    # def get(self, request, *args, **kwargs):
-    #     username = kwargs.get('username')
-    #     try:
-    #         user = User.objects.get(username=username)
-    #         serializer = UserSerializer(user)
-    #         return Response(serializer.data)
-    #     except User.DoesNotExist:
-    #         return Response({'error': 'user not found'}, status=status.HTTP_404_NOT_FOUND)
-
+    # это будет для обновления профиля, хотя правильнее скорее всего использовать метод PUT
     def post(self, request):
         serializer = UserSerializer(data=request.data)
+        # проверка что данные корректны и сохраняет их
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+# все что ниже это было написано при изучении DRF и сохранено просто чтобы легче было вспомнить при необходимости.
 
 # @api_view(['GET'])
 # def api_root(request, format=None):
